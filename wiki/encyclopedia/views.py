@@ -20,4 +20,13 @@ def index(request):
 
 
 def entry(request, title):
-    pass
+    html_content = convert_md_to_html(title)
+    if html_content is None:
+        return render(request, "encyclopedia/error.html", {
+            "title_name": title
+        })
+    else:
+        return render(request, "encyclopedia/entry.html", {
+            "title_name": title,
+            "md_content": html_content
+        })

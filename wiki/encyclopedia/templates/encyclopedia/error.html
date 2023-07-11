@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>No Such Entry</title>
-</head>
-<body>
-    <h1>
-        No Such Entry...
-    </h1>
-</body>
-</html>
+{% extends "encyclopedia/layout.html" %}
+
+{% block body %}
+    <h1>The Requested Page "{{ title_name }}" Was Not Founded...</h1>
+
+{% endblock %}
