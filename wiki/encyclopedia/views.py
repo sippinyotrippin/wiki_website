@@ -1,7 +1,12 @@
 from markdown2 import Markdown
+from django import forms
 from django.shortcuts import render
 
 from . import util
+
+
+class SearchEncyclopediaForm(forms.Form):
+    form = forms.CharField(label="Search Encyclopedia")
 
 
 def convert_md_to_html(title):
@@ -30,3 +35,12 @@ def entry(request, title):
             "title_name": title,
             "md_content": html_content
         })
+
+
+def search(request, q):
+    if q not in util.list_entries():
+        return render(request, "encyclopedia/found_pages.html", {
+            "page": q
+        })
+    else:
+        return entry(request, q)
