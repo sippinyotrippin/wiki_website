@@ -1,12 +1,7 @@
 from markdown2 import Markdown
-from django import forms
 from django.shortcuts import render
 
 from . import util
-
-
-class SearchEncyclopediaForm(forms.Form):
-    form = forms.CharField(label="Search Encyclopedia")
 
 
 def convert_md_to_html(title):
@@ -37,10 +32,25 @@ def entry(request, title):
         })
 
 
-def search(request, q):
-    if q not in util.list_entries():
-        return render(request, "encyclopedia/found_pages.html", {
-            "page": q
-        })
-    else:
-        return entry(request, q)
+def search(request):
+    if request.method == "POST":
+        entry_search = request.POST['q']
+        your_search = entry_search
+        html_content = convert_md_to_html(entry_search)
+        if html_content is None:
+            for entry_item in util.list_entries():
+                if entry_search in entry_item:
+                    entry_search = entry_item
+                    return render(request, 'encyclopedia/didyoumean.html', {
+                        "page_name": entry_search,
+                        "your_search": your_search
+                    })
+            return render(request, "encyclopedia/found_pages.html", {
+                "page": entry_search
+            })
+
+        else:
+            return render(request, "encyclopedia/entry.html", {
+                "title_name": entry_search,
+                "md_content": html_content
+            })
