@@ -54,3 +54,24 @@ def search(request):
                 "title_name": entry_search,
                 "md_content": html_content
             })
+
+
+def new_page(request):
+    if request.method == "GET":
+        return render(request, "encyclopedia/create_new_page.html")
+    else:
+        title = request.POST['title']
+        content = request.POST['content']
+        if title in util.list_entries():
+            return render(request, "encyclopedia/create_error.html")
+        else:
+            util.save_entry(title, content)
+            html_content = convert_md_to_html(title)
+            return render(request, "encyclopedia/entry.html", {
+                "title_name": title,
+                "md_content": html_content
+            })
+
+
+def edit_page(request):
+    pass
