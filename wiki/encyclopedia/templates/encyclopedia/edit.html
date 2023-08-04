@@ -2,14 +2,15 @@
 
 {% block body %}
     <h1>Edit Page's Content</h1>
-    <form action="" method="POST">
+    <form action="{% url 'save_edit' %}" method="POST">
         {% csrf_token %}
         <label>Edit Page Name:</label>
-        <input type="text" value="{{ title }}">
+        <input type="text" name="edit_title" value="{{ title }}">
+        <input type="hidden" name="previous_title" value="{{ title }}">
         <br/>
         <label>Edit Page Content:</label>
         <br/>
-        <textarea>{{ md_content }}</textarea>
+        <textarea name="edit_content">{{ md_content }}</textarea>
         <br/>
         <input type="submit" value="Edit" class="btn btn-danger">
     </form>

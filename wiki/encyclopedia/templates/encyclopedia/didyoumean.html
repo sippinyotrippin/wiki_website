@@ -2,5 +2,11 @@
 
 {% block body %}
     <h1>The Page "{{ your_search }}" Was Not Found</h1>
-    Did you mean <a href="http://127.0.0.1:8000/wiki/{{ page_name }}">{{ page_name }}</a>?
+    These results could appropriate your search request:
+        <ul>
+            {% for result in results %}
+            <li><a href="http://127.0.0.1:8000/wiki/{{ result }}">{{ result }}</a></li>
+            {% endfor %}
+        </ul>
+
  {% endblock %}
