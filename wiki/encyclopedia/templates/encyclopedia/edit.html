@@ -4,10 +4,13 @@
     <h1>Edit Page's Content</h1>
     <form action="" method="POST">
         {% csrf_token %}
-        <label>Edit Markdown Content:</label>
-        <br>
-        <textarea name="content"></textarea>
-        <br>
-        <input type="submit" value="Save" class="btn btn-danger">
+        <label>Edit Page Name:</label>
+        <input type="text" value="{{ title }}">
+        <br/>
+        <label>Edit Page Content:</label>
+        <br/>
+        <textarea>{{ md_content }}</textarea>
+        <br/>
+        <input type="submit" value="Edit" class="btn btn-danger">
     </form>
 {% endblock %}

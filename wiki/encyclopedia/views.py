@@ -75,9 +75,13 @@ def new_page(request):
 
 def edit_page(request):
     if request.method == "POST":
-        title = request.POST['entry_title']
+        title = request.POST.get('title_')
         content = util.get_entry(title)
         return render(request, "encyclopedia/edit.html", {
             "title": title,
-            "content": content
+            "md_content": content
         })
+
+
+def save_edit(request):
+    pass
