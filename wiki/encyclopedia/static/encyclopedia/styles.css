@@ -22,7 +22,7 @@ textarea {
 }
 
 .search {
-    width: 75%;
+    width: 86%;
     font-size: 15px;
     line-height: 25px;
 }
@@ -35,4 +35,9 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.search_button {
+    border-radius: 5px;
+    width: 12%;
 }
