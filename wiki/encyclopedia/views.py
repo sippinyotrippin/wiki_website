@@ -36,32 +36,31 @@ def entry(request, title):
 def search(request):
     if request.method == "POST":
         entry_search = request.POST['q']
-        your_search = entry_search
         html_content = convert_md_to_html(entry_search)
-        entries = util.list_entries()
         results = []
-        if html_content is None:
-            for page in entries:
+        if html_content is not None:
+            return render(request, "encyclopedia/entry.html", {
+                "title_name": entry_search,
+                "md_content": html_content
+            })
+        else:
+            for page in util.list_entries():
                 if entry_search.lower() == page.lower():
-                    results = "Found"
-                    entry_search = page
-                    break
+                    return render(request, "encyclopedia/entry.html", {
+                        "title_name": page,
+                        "md_content": convert_md_to_html(page)
+                    })
                 elif entry_search.lower() in page.lower():
                     results.append(page)
-            if not results:
+            if results:
+                return render(request, "encyclopedia/didyoumean.html", {
+                    "your_search": entry_search,
+                    "results": results
+                })
+            else:
                 return render(request, "encyclopedia/search_error.html", {
                     "page": entry_search
                 })
-            elif results != "Found":
-                return render(request, 'encyclopedia/didyoumean.html', {
-                    "your_search": your_search,
-                    "results": results
-                })
-        else:
-            return render(request, "encyclopedia/entry.html", {
-                "title_name": entry_search,
-                "md_content": convert_md_to_html(entry_search)
-            })
 
 
 def new_page(request):
